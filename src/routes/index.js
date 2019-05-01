@@ -13,7 +13,6 @@ function setupRoutes(app){
 	setupCohortRoutes(cohortRouter)
 	app.use('/api/cohorts', cohortRouter)
 	
-	
 	app.get('/', async (req, res) => {
 		console.log('root route called')
 	})

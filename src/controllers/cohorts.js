@@ -29,6 +29,24 @@ export const getCohort = async (req, res, next) => {
     }
 }
 
+export const getStudents = async (req, res, next) => {
+	try {
+		if(!req.params.id){
+			res.status(401).json({message:'id is required'})
+		}
+		const students = await db.getStudentsByCohort(req.params.id)
+		if(students.length > 0){
+			res.status(200).json(students)
+		}else{
+			res.status(404).json({ message: 'this cohort does not exist' });
+		}
+	}
+	catch(e){
+		console.error(e)
+		res.status(500).json(e);
+    }
+}
+
 
 export const postCohorts = async (req, res) => {
 	try {

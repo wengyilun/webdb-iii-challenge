@@ -9,8 +9,13 @@ const dao = {
 	getCohortById,
 	updateCohortById,
 	deleteCohort,
+	getStudentsByCohort,
 	
-	getStudents,
+	getAllStudents,
+	getStudentById,
+	insertStudents,
+	updateStudentById,
+	deleteStudent
 }
 
 
@@ -32,6 +37,16 @@ async function getCohortById(id){
 			.where({id:id})
 			.then(cohorts => {
 				return cohorts
+			})
+			.catch(e => e)
+	
+}
+
+async function getStudentsByCohort(cohort_id){
+	return db('students')
+			.where({cohort_id:cohort_id})
+			.then(students => {
+				return students
 			})
 			.catch(e => e)
 	
@@ -71,12 +86,53 @@ async function deleteCohort(id){
 //	 	Students
 //=====================
 
-async function getStudents(){
+async function getAllStudents(){
+	console.log('db. getAllStudents')
 	return db('students')
 	.then(students => {
-		return  students
+		return students
+	})
+	.catch(e => e)
+}
+
+
+async function getStudentById(id){
+	return db('students')
+	.where({id:id})
+	.then(students => {
+		return students
 	})
 	.catch(e => e)
 	
 }
+
+async function insertStudents(student){
+	return db.insert(student)
+	.into('students')
+	.then(lastId => {
+		return lastId
+	})
+	.catch(e => e)
+}
+
+async function updateStudentById(id, student){
+	return db('students')
+	.where({id:id})
+	.update(student)
+	.then(students => {
+		return students
+	})
+	.catch(e => e)
+}
+
+async function deleteStudent(id){
+	return db('students')
+	.where({id:id})
+	.del()
+	.then(deleteCount => {
+		return deleteCount
+	})
+	.catch(e => e)
+}
+
 export default dao
